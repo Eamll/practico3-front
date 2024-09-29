@@ -1,1 +1,25 @@
-<p>registro-cliente works!</p>
+<div class="p-grid p-justify-center">
+  <div class="p-col-12 p-md-8 p-lg-6">
+    <p-card header="Registro de Cliente">
+      <form (ngSubmit)="onSubmit()" #clienteForm="ngForm">
+        <div class="p-fluid">
+          <div class="p-field">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" type="text" pInputText [(ngModel)]="cliente.nombre" name="nombre" required>
+          </div>
+          <div class="p-field">
+            <label for="ci_nit">CI/NIT</label>
+            <input id="ci_nit" type="text" pInputText [(ngModel)]="cliente.ci_nit" name="ci_nit" required>
+          </div>
+          <div class="p-field">
+            <label for="email">Email</label>
+            <input id="email" type="email" pInputText [(ngModel)]="cliente.email" name="email" required email>
+          </div>
+          <button pButton type="submit" label="Registrar Cliente" [disabled]="!clienteForm.form.valid"></button>
+        </div>
+      </form>
+    </p-card>
+  </div>
+</div>
+
+<p-toast></p-toast>

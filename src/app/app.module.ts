@@ -8,6 +8,13 @@ import { RegistroClienteComponent } from './components/registro-cliente/registro
 import { ListaVentasComponent } from './components/lista-ventas/lista-ventas.component';
 import { RegistroVentaComponent } from './components/registro-venta/registro-venta.component';
 import { HomeComponent } from './pages/home/home.component';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import { FormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -20,9 +27,15 @@ import { HomeComponent } from './pages/home/home.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    CardModule,
+    InputTextModule,
+    ButtonModule,
+    ToastModule,
+    FormsModule,
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
