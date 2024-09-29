@@ -18,6 +18,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { MessagesModule } from 'primeng/messages';
+import { TableModule } from 'primeng/table';
+import { provideHttpClient } from '@angular/common/http';
+import { MessageModule } from 'primeng/message';
 
 
 @NgModule({
@@ -41,9 +44,11 @@ import { MessagesModule } from 'primeng/messages';
     DropdownModule,
     ReactiveFormsModule,
     InputNumberModule,
-    MessagesModule
+    MessagesModule,
+    MessageModule,
+    TableModule,
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'es-BO' }, MessageService],
+  providers: [{ provide: LOCALE_ID, useValue: 'es-BO' }, MessageService, provideHttpClient()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

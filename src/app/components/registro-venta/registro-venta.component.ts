@@ -3,29 +3,18 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { Cliente } from '../../models/cliente.model';
 import { Producto } from '../../models/producto.model';
+import { ClienteService } from '../../services/cliente.service';
+import { ProductoService } from '../../services/producto.service';
 @Component({
   selector: 'app-registro-venta',
   templateUrl: './registro-venta.component.html',
   providers: [MessageService]
 })
 export class RegistroVentaComponent implements OnInit {
+
   ventaForm!: FormGroup;
-  clientes: Cliente[] = [
-    {
-      ci_nit: '12345678',
-      nombre: 'Juan Perez',
-      email: 'juan@gmail.com',
-      id: 1
-    }
-  ];
-  productos: Producto[] = [
-    {
-      id: 1,
-      nombre: 'Juan Perez',
-      precio: 10,
-      stock: 10
-    }
-  ];
+  clientes: Cliente[] = [];
+  productos: Producto[] = [];
   metodosPago: any[] = [
     { label: 'Efectivo', value: 'Efectivo' },
     { label: 'Tarjeta', value: 'Tarjeta' }
@@ -35,13 +24,24 @@ export class RegistroVentaComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
-    // Inject your services here
+    private clienteService: ClienteService,
+    private productoService: ProductoService
   ) { }
 
   ngOnInit() {
     this.initForm();
-    this.loadClientes();
-    this.loadProductos();
+    this.fetchClients();
+    this.fetchProductos();
+  }
+
+  fetchClients(): void {
+    console.log('Fetching clients...');
+    this.clientes = this.clienteService.getClients();
+  }
+
+  fetchProductos(): void {
+    console.log('Fetching products...');
+    this.productos = this.productoService.getProductos();
   }
 
   initForm() {
@@ -70,16 +70,10 @@ export class RegistroVentaComponent implements OnInit {
     this.itemsFormArray.removeAt(index);
   }
 
-  loadClientes() {
-    // Implement API call to get clients
-  }
-
-  loadProductos() {
-    // Implement API call to get products
-  }
-
   getSelectedClienteName() {
-    // Implement logic to get selected client name
+    const clienteId = this.ventaForm.get('cliente_id')?.value;
+    const selectedCliente = this.clientes.find(cliente => cliente.id === clienteId);
+    return selectedCliente ? selectedCliente.nombre : '';
   }
 
   calcularTotal(): number {
