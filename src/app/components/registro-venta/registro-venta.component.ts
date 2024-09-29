@@ -3,8 +3,11 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { Cliente } from '../../models/cliente.model';
 import { Producto } from '../../models/producto.model';
+import { Venta, VentaItem } from '../../models/venta.model';
 import { ClienteService } from '../../services/cliente.service';
 import { ProductoService } from '../../services/producto.service';
+import { VentaService } from '../../services/venta.service';
+
 @Component({
   selector: 'app-registro-venta',
   templateUrl: './registro-venta.component.html',
@@ -25,7 +28,8 @@ export class RegistroVentaComponent implements OnInit {
     private fb: FormBuilder,
     private messageService: MessageService,
     private clienteService: ClienteService,
-    private productoService: ProductoService
+    private productoService: ProductoService,
+    private ventaService: VentaService
   ) { }
 
   ngOnInit() {
@@ -86,9 +90,23 @@ export class RegistroVentaComponent implements OnInit {
 
   onSubmit() {
     if (this.ventaForm.valid) {
-      // Implement API call to submit form
+      const newVenta: Venta = {
+        id: this.ventaService.getVentas().length + 1,  // Generate new ID
+        cliente_id: this.ventaForm.get('cliente_id')?.value,
+        metodo_pago: this.ventaForm.get('metodo_pago')?.value,
+        items: this.itemsFormArray.value.map((item: any) => ({
+          producto_id: item.producto_id,
+          cantidad: item.cantidad,
+          precio_unitario: item.precio_unitario,
+          total: item.cantidad * item.precio_unitario
+        })),
+        total: this.calcularTotal()
+      };
+      this.ventaService.addVenta(newVenta);  // Add newVenta using VentaService
       this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Venta registrada correctamente' });
       this.ventaForm.reset();
+      this.itemsFormArray.clear();
+      this.addItem();  // Add default item line
     } else {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Por favor, complete todos los campos requeridos.' });
     }

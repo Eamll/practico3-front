@@ -1,1 +1,26 @@
-<p>lista-ventas works!</p>
+<p-table [value]="ventas" dataKey="id" responsiveLayout="scroll">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Venta ID</th>
+      <th>Cliente ID</th>
+      <th>Método de Pago</th>
+      <th>Total</th>
+      <th>Items</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-venta>
+    <tr>
+      <td>{{ venta.id }}</td>
+      <td>{{ venta.cliente_id }}</td>
+      <td>{{ venta.metodo_pago }}</td>
+      <td>{{ venta.total }}</td>
+      <td>
+        <ul>
+          <li *ngFor="let item of venta.items">
+            Producto ID: {{ item.producto_id }}, Cantidad: {{ item.cantidad }}, Precio Unitario: {{ item.precio_unitario }}, Total: {{ item.total }}
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

@@ -21,4 +21,11 @@ export class ClienteService {
     return this.clientes;
     // return this.http.get<Cliente[]>(this.apiUrl);
   }
+
+  addCliente(cliente: Cliente) {
+    this.clientes.push(cliente);
+    // const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    // return this.http.post<Cliente>(this.apiUrl, cliente, { headers });
+  }
+
 }
