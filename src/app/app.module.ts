@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,9 +12,13 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { MessagesModule } from 'primeng/messages';
+
 
 @NgModule({
   declarations: [
@@ -34,8 +38,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ButtonModule,
     ToastModule,
     FormsModule,
+    DropdownModule,
+    ReactiveFormsModule,
+    InputNumberModule,
+    MessagesModule
   ],
-  providers: [MessageService],
+  providers: [{ provide: LOCALE_ID, useValue: 'es-BO' }, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -11,7 +11,8 @@ export class RegistroClienteComponent {
   cliente: Cliente = {
     nombre: '',
     ci_nit: '',
-    email: ''
+    email: '',
+    id: 0
   };
   constructor(private messageService: MessageService) { }
 
@@ -21,11 +22,10 @@ export class RegistroClienteComponent {
     console.log('Submitting', this.cliente);
 
     setTimeout(() => {
-      // Simulating successful registration
       this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Cliente registrado correctamente' });
       this.cliente = {
-        nombre: '', ci_nit: '', email: ''
-      }; // Reset form
+        nombre: '', ci_nit: '', email: '', id: 0
+      };
     }, 1000);
 
     // Error handling would look something like this:

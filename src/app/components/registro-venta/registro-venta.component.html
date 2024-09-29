@@ -1,1 +1,63 @@
-<p>registro-venta works!</p>
+
+<div class="p-grid p-justify-center">
+  <div class="p-col-12 p-md-8 p-lg-6">
+    <p-card header="Registro de Venta">
+<form [formGroup]="ventaForm" (ngSubmit)="onSubmit()">
+  <div class="p-fluid">
+    <div class="p-field">
+      <label for="cliente">Cliente</label>
+      <p-dropdown id="cliente" [options]="clientes" formControlName="cliente_id" optionLabel="nombre" optionValue="id" [filter]="true" filterBy="nombre,ci_nit,email" placeholder="Seleccione un cliente">
+        <ng-template pTemplate="selectedItem">
+          <div *ngIf="ventaForm.get('cliente_id')?.value">
+            {{getSelectedClienteName()}}
+          </div>
+        </ng-template>
+        <ng-template let-cliente pTemplate="item">
+          <div>{{cliente.nombre}} - {{cliente.ci_nit}}</div>
+          <div>{{cliente.email}}</div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <div class="p-field">
+      <label for="metodo_pago">Método de Pago</label>
+      <p-dropdown id="metodo_pago" [options]="metodosPago" formControlName="metodo_pago" placeholder="Seleccione un método de pago"></p-dropdown>
+    </div>
+
+    <div formArrayName="items">
+      <div *ngFor="let item of itemsFormArray.controls; let i = index" [formGroupName]="i" class="p-grid">
+        <div class="p-col-4">
+          <label for="producto_{{i}}">Producto</label>
+          <p-dropdown id="producto_{{i}}" [options]="productos" formControlName="producto_id" optionLabel="nombre" optionValue="id" placeholder="Seleccione un producto"></p-dropdown>
+        </div>
+        <div class="p-col-3">
+          <label for="cantidad_{{i}}">Cantidad</label>
+          <p-inputNumber id="cantidad_{{i}}" formControlName="cantidad" [showButtons]="true" [min]="1"></p-inputNumber>
+        </div>
+        <div class="p-col-3">
+          <label for="precio_unitario_{{i}}">Precio Unitario</label>
+          <p-inputNumber id="precio_unitario_{{i}}" formControlName="precio_unitario" mode="currency" currency="BOB" locale="es-BO"></p-inputNumber>
+        </div>
+        <div class="p-col-2">
+          <button pButton type="button" icon="pi pi-trash" class="p-button-danger" (click)="removeItem(i)"></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-field">
+      <button pButton type="button" label="Agregar Producto" icon="pi pi-plus" (click)="addItem()"></button>
+    </div>
+
+    <div class="p-field">
+      <label>Total: {{calcularTotal() | currency:'BOB':'symbol':'1.2-2':'es-BO'}}</label>
+    </div>
+
+    <div class="p-field">
+      <button pButton type="submit" label="Registrar Venta" [disabled]="ventaForm.invalid"></button>
+    </div>
+  </div>
+</form>
+</p-card>
+  </div>
+</div>
+<p-toast></p-toast>
