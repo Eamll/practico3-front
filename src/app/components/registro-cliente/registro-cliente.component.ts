@@ -22,36 +22,10 @@ export class RegistroClienteComponent {
   onSubmit() {
     console.log('Submitting', this.cliente);
 
-    setTimeout(() => {
-      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Cliente registrado correctamente' });
-      this.cliente = {
-        nombre: '', ci_nit: '', email: '', id: 0
-      };
-    }, 1000);
-
+    this.cliente.id = Date.now(); // Assuming that IDs are generated client-side manually. Replace with actual ID logic if necessary.
     this.clienteService.addCliente(this.cliente);
 
-    // this.clienteService.addCliente(this.cliente).subscribe({
-    //   next: newCliente => {
-    //     this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Cliente registrado correctamente' });
-    //     this.cliente = { nombre: '', ci_nit: '', email: '', id: 0 };
-    //   },
-    //   error: err => {
-    //     if (err.status === 400) {
-    //       Object.keys(err.error.errors).forEach(key => {
-    //         this.messageService.add({ severity: 'error', summary: 'Error', detail: err.error.errors[key] });
-    //       });
-    //     } else {
-    //       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al registrar el cliente' });
-    //     }
-    //   }
-    // });
-
-    // Error handling would look something like this:
-    // if (error.status === 400) {
-    //   Object.keys(error.error.errors).forEach(key => {
-    //     this.messageService.add({severity:'error', summary: 'Error', detail: error.error.errors[key]});
-    //   });
-    // }
+    this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Cliente registrado correctamente' });
+    this.cliente = { nombre: '', ci_nit: '', email: '', id: 0 };
   }
 }

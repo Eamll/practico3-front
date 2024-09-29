@@ -29,7 +29,7 @@ export class RegistroVentaComponent implements OnInit {
     private messageService: MessageService,
     private clienteService: ClienteService,
     private productoService: ProductoService,
-    private ventaService: VentaService
+    private ventaService: VentaService  // Inject VentaService
   ) { }
 
   ngOnInit() {
@@ -40,7 +40,9 @@ export class RegistroVentaComponent implements OnInit {
 
   fetchClients(): void {
     console.log('Fetching clients...');
-    this.clientes = this.clienteService.getClients();
+    this.clienteService.clientes$.subscribe(clients => {
+      this.clientes = clients;
+    });
   }
 
   fetchProductos(): void {
