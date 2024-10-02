@@ -36,7 +36,7 @@
         </div>
         <div class="p-col-3">
           <label for="precio_unitario_{{i}}">Precio Unitario</label>
-          <p-inputNumber id="precio_unitario_{{i}}" formControlName="precio_unitario" mode="currency" currency="BOB" locale="es-BO"></p-inputNumber>
+          <p-inputNumber id="precio_unitario_{{i}}" formControlName="precio_unitario" [showButtons]="true" [min]="1"></p-inputNumber>
         </div>
         <div class="p-col-2">
           <button pButton type="button" icon="pi pi-trash" class="p-button-danger" (click)="removeItem(i)"></button>

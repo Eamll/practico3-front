@@ -6,7 +6,7 @@ export interface VentaItem {
 }
 
 export interface Venta {
-  id: number;
+  id?: number;
   cliente_id: number;
   metodo_pago: string;
   items: VentaItem[];

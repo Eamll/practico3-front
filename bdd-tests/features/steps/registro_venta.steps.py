@@ -15,6 +15,7 @@ def step_given_estoy_en_la_pagina_de_registro_de_ventas(context):
 def step_when_selecciono_un_cliente_valido(context):
     cliente_dropdown = context.driver.find_element(By.ID, "cliente")
     cliente_dropdown.click()
+    time.sleep(2)
     client_option = context.driver.find_element(By.CSS_SELECTOR, "li.p-dropdown-item")
     client_option.click()
 
@@ -30,23 +31,22 @@ def step_when_selecciono_un_metodo_de_pago(context):
 
 @when('agrego un producto con cantidad y precio')
 def step_when_agrego_un_producto_con_cantidad_y_precio(context):
-    # add_button = context.driver.find_element(By.CSS_SELECTOR, "button[label='Agregar Producto']")
-    # add_button.click()
-    # time.sleep(1)
     producto_dropdown = context.driver.find_element(By.ID, "producto_0")
     producto_dropdown.click()
-
-    # Updated XPath to find the product option
     product_option = WebDriverWait(context.driver, 1).until(
-        EC.element_to_be_clickable((By.XPATH, "//li[contains(@class, 'p-dropdown-item')]//span[text()='Producto 1']"))
+        EC.element_to_be_clickable((By.XPATH, "//li[contains(@class, 'p-dropdown-item')][1]"))
     )
     product_option.click()
-
-    cantidad_input = context.driver.find_element(By.ID, "cantidad_0")
+    time.sleep(2)
+    input_wrapper = context.driver.find_element(By.ID, "cantidad_0")
+    cantidad_input = input_wrapper.find_element(By.CSS_SELECTOR, "input.p-inputnumber-input")
+    cantidad_input.clear()
     cantidad_input.send_keys("5")
-    precio_input = context.driver.find_element(By.ID, "precio_unitario_0")
-    precio_input.send_keys(Keys.CONTROL + "a")  # Select all text
-    precio_input.send_keys(Keys.DELETE)  # Delete selected text
+
+
+    input_wrapper = context.driver.find_element(By.ID, "precio_unitario_0")
+    precio_input = input_wrapper.find_element(By.CSS_SELECTOR, "input.p-inputnumber-input")
+    precio_input.clear()
     precio_input.send_keys("20")
     time.sleep(2)
 

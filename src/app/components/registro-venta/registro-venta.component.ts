@@ -95,7 +95,6 @@ export class RegistroVentaComponent implements OnInit {
   onSubmit() {
     if (this.ventaForm.valid) {
       const newVenta: Venta = {
-        id: this.ventaService.getVentas().length + 1,  // Generate new ID
         cliente_id: this.ventaForm.get('cliente_id')?.value,
         metodo_pago: this.ventaForm.get('metodo_pago')?.value,
         items: this.itemsFormArray.value.map((item: any) => ({
@@ -106,11 +105,19 @@ export class RegistroVentaComponent implements OnInit {
         })),
         total: this.calcularTotal()
       };
-      this.ventaService.addVenta(newVenta);  // Add newVenta using VentaService
-      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Venta registrada correctamente' });
-      this.ventaForm.reset();
-      this.itemsFormArray.clear();
-      this.addItem();  // Add default item line
+      this.ventaService.addVenta(newVenta).subscribe(
+        response => {
+          console.log('Success:', response);
+          this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Venta registrada correctamente' });
+          this.ventaForm.reset();
+          this.itemsFormArray.clear();
+          this.addItem();  // Add default item line
+        },
+        error => {
+          console.error('Error:', error);
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo registrar la venta' });
+        }
+      );
     } else {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Por favor, complete todos los campos requeridos.' });
     }

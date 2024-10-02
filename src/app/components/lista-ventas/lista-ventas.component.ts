@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Venta } from '../../models/venta.model';
 import { VentaService } from '../../services/venta.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-lista-ventas',
@@ -18,6 +19,8 @@ export class ListaVentasComponent implements OnInit {
   }
 
   fetchVentas(): void {
-    this.ventas = this.ventaService.getVentas();
+    this.ventaService.getVentas().subscribe((data: Venta[]) => {
+      this.ventas = data;
+    });
   }
 }

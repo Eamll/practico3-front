@@ -12,3 +12,5 @@ cd into the `bdd-tests` directory and install the required dependencies:
 
 Run `python -m behave` to run the BDD tests.
 
+python -m behave features/registro_cliente.feature
+python -m behave features/registro_venta.feature
