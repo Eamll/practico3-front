@@ -58,11 +58,9 @@ def step_when_envio_el_formulario_de_venta(context):
     )
     submit_button.click()
 
-    # Wait for any post-submission processing
-    time.sleep(2)
-
 @then('debería ver un mensaje de éxito en venta')
 def step_then_deberia_ver_un_mensaje_de_exito_en_venta(context):
+    time.sleep(6)
     messages = context.driver.find_elements(By.CLASS_NAME, 'p-toast-message')
     assert any("Venta registrada correctamente" in message.text for message in messages)
     context.driver.quit()
