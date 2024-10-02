@@ -17,11 +17,9 @@ export class ListaClientesComponent implements OnInit {
 
   fetchClients(): void {
     console.log('Fetching clients...');
-    this.clienteService.clientes$.subscribe(clients => {
-      this.clientes = clients;
+
+    this.clienteService.getClients().subscribe((data: Cliente[]) => {
+      this.clientes = data;
     });
-    // this.clienteService.getClients().subscribe((data: Cliente[]) => {
-    //   this.clientes = data;
-    // });
   }
 }

@@ -40,14 +40,16 @@ export class RegistroVentaComponent implements OnInit {
 
   fetchClients(): void {
     console.log('Fetching clients...');
-    this.clienteService.clientes$.subscribe(clients => {
-      this.clientes = clients;
+    this.clienteService.getClients().subscribe((data: Cliente[]) => {
+      this.clientes = data;
     });
   }
 
   fetchProductos(): void {
     console.log('Fetching products...');
-    this.productos = this.productoService.getProductos();
+    this.productoService.getProductos().subscribe((data: Producto[]) => {
+      this.productos = data;
+    });
   }
 
   initForm() {

@@ -22,10 +22,16 @@ export class RegistroClienteComponent {
   onSubmit() {
     console.log('Submitting', this.cliente);
 
-    this.cliente.id = Date.now(); // Assuming that IDs are generated client-side manually. Replace with actual ID logic if necessary.
-    this.clienteService.addCliente(this.cliente);
-
-    this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Cliente registrado correctamente' });
-    this.cliente = { nombre: '', ci_nit: '', email: '', id: 0 };
+    this.clienteService.addCliente(this.cliente).subscribe(
+      response => {
+        console.log('Success:', response);
+        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Cliente registrado correctamente' });
+        this.cliente = { nombre: '', ci_nit: '', email: '', id: 0 };
+      },
+      error => {
+        console.error('Error:', error);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo registrar el cliente' });
+      }
+    );
   }
 }

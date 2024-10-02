@@ -3,52 +3,63 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 import time
-
 @given('estoy en la página de registro de ventas')
 def step_given_estoy_en_la_pagina_de_registro_de_ventas(context):
     context.driver = webdriver.Chrome()  # Asegúrese de tener ChromeDriver instalado y la ruta configurada
-    context.driver.get("http://localhost:4200/registro-venta")  # Actualice la URL a su componente de registro de ventas
+    context.driver.maximize_window()
+    context.driver.get("http://localhost:4200")  # Actualice la URL a su componente de registro de ventas
 
 @when('selecciono un cliente válido')
 def step_when_selecciono_un_cliente_valido(context):
     cliente_dropdown = context.driver.find_element(By.ID, "cliente")
     cliente_dropdown.click()
-    client_option = WebDriverWait(context.driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//li[contains(text(), 'John Doe')]"))
-    )
+    client_option = context.driver.find_element(By.CSS_SELECTOR, "li.p-dropdown-item")
     client_option.click()
 
 @when('selecciono un método de pago')
 def step_when_selecciono_un_metodo_de_pago(context):
     metodo_pago_dropdown = context.driver.find_element(By.ID, "metodo_pago")
     metodo_pago_dropdown.click()
-    metodo_option = WebDriverWait(context.driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//li[contains(text(), 'Tarjeta de Crédito')]"))
+     # Wait for the dropdown options to be visible and select "Efectivo"
+    metodo_option = WebDriverWait(context.driver, 1).until(
+        EC.element_to_be_clickable((By.XPATH, "//li[contains(@class, 'p-dropdown-item')]//span[text()='Efectivo']"))
     )
     metodo_option.click()
 
 @when('agrego un producto con cantidad y precio')
 def step_when_agrego_un_producto_con_cantidad_y_precio(context):
-    add_button = context.driver.find_element(By.CSS_SELECTOR, "button[label='Agregar Producto']")
-    add_button.click()
-    time.sleep(1)
+    # add_button = context.driver.find_element(By.CSS_SELECTOR, "button[label='Agregar Producto']")
+    # add_button.click()
+    # time.sleep(1)
     producto_dropdown = context.driver.find_element(By.ID, "producto_0")
     producto_dropdown.click()
-    product_option = WebDriverWait(context.driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//li[contains(text(), 'Producto A')]"))
+
+    # Updated XPath to find the product option
+    product_option = WebDriverWait(context.driver, 1).until(
+        EC.element_to_be_clickable((By.XPATH, "//li[contains(@class, 'p-dropdown-item')]//span[text()='Producto 1']"))
     )
     product_option.click()
+
     cantidad_input = context.driver.find_element(By.ID, "cantidad_0")
     cantidad_input.send_keys("5")
     precio_input = context.driver.find_element(By.ID, "precio_unitario_0")
+    precio_input.send_keys(Keys.CONTROL + "a")  # Select all text
+    precio_input.send_keys(Keys.DELETE)  # Delete selected text
     precio_input.send_keys("20")
+    time.sleep(2)
 
 @when('envío el formulario de venta')
 def step_when_envio_el_formulario_de_venta(context):
-    submit_button = context.driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
+    # Wait for the button to be clickable
+    submit_button = WebDriverWait(context.driver, 1).until(
+        EC.element_to_be_clickable((By.XPATH, "//button[@type='submit' and .//span[text()='Registrar Venta']]"))
+    )
     submit_button.click()
-    time.sleep(2)  # Espere a que el formulario sea procesado y se muestre la respuesta
+
+    # Wait for any post-submission processing
+    time.sleep(2)
 
 @then('debería ver un mensaje de éxito en venta')
 def step_then_deberia_ver_un_mensaje_de_exito_en_venta(context):
@@ -74,7 +85,7 @@ def step_when_agrego_un_producto_con_cantidad_insuficiente(context):
     time.sleep(1)
     producto_dropdown = context.driver.find_element(By.ID, "producto_0")
     producto_dropdown.click()
-    product_option = WebDriverWait(context.driver, 10).until(
+    product_option = WebDriverWait(context.driver, 1).until(
         EC.presence_of_element_located((By.XPATH, "//li[contains(text(), 'Producto A')]"))
     )
     product_option.click()
