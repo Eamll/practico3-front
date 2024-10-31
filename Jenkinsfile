@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        NODE_VERSION = 'v21.7.2'  // Node.js version installed on your system
+        NODE_VERSION = 'v20.18.0'  // Node.js version installed on your system
         ANGULAR_REPO = 'https://github.com/Eamll/practico3-front.git'
     }
 
