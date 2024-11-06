@@ -29,8 +29,8 @@ pipeline {
                 stage('Build Angular Project') {
                     steps {
                         dir('frontend') {
-                            // Build the Angular project
-                            bat 'npm run build --prod'
+                            // Build the Angular project with a base href of "./"
+                            bat 'npm run build --prod -- --base-href "./"'
                         }
                     }
                 }

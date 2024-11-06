@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, map } from 'rxjs';
 import { Cliente } from '../models/cliente.model';
+import { environment } from '../enviroments/enviroment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
-  private apiUrl = 'http://127.0.0.1:8000/api/clientes';  // Replace with the actual API endpoint
+  private apiUrl = environment.apiUrl + '/clientes';  // Replace with the actual API endpoint
 
   constructor(private http: HttpClient) { }
 
