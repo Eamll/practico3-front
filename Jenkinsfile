@@ -6,6 +6,7 @@ pipeline {
         string(name: 'ANGULAR_REPO', defaultValue: 'https://github.com/Eamll/practico3-front.git', description: 'URL of the Angular repository')
         string(name: 'XAMPP_PATH', defaultValue: 'C:\\xampp\\htdocs', description: 'XAMPP htdocs directory with backslashes')
         string(name: 'API_URL', defaultValue: 'http://localhost:3000/laravel-app/public/api', description: 'API URL to be used in the Angular environment file')
+        booleanParam(name: 'INSTALL_DEPENDENCIES', defaultValue: true, description: 'Whether to run npm install')
     }
 
     environment {
@@ -26,6 +27,9 @@ pipeline {
                     }
                 }
                 stage('Install Angular Dependencies') {
+                    when {
+                        expression { return params.INSTALL_DEPENDENCIES }
+                    }
                     steps {
                         dir('frontend') {
                             bat 'npm install'
