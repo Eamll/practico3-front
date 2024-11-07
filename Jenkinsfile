@@ -36,9 +36,7 @@ pipeline {
                     steps {
                         dir('frontend') {
                             script {
-                                bat 'cd'
-                                bat 'dir src\\app\\environments\\'
-                                def envFilePath = 'src/app/environments/environment.ts'
+                                def envFilePath = 'src\\app\\environments\\enviroment.ts'
                                 def content = readFile(envFilePath)
                                 content = content.replaceFirst(/apiUrl: '.*'/, "apiUrl: '${API_URL}'")
                                 writeFile(file: envFilePath, text: content)
