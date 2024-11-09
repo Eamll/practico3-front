@@ -15,6 +15,10 @@
             <label for="email">Email</label>
             <input id="email" type="email" pInputText [(ngModel)]="cliente.email" name="email" required email>
           </div>
+          <div class="p-field">
+            <label for="domicilio"> Domicilio</label>
+            <input id="domicilio" type="text" pInputText [(ngModel)]="cliente.domicilio" name="domicilio" required>
+          </div>
           <button pButton type="submit" label="Registrar Cliente" [disabled]="!clienteForm.form.valid"></button>
         </div>
       </form>

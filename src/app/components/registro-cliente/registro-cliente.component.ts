@@ -12,7 +12,8 @@ export class RegistroClienteComponent {
   cliente: Cliente = {
     nombre: '',
     ci_nit: '',
-    email: ''
+    email: '',
+    domicilio: ''
   };
   constructor(private clienteService: ClienteService, private messageService: MessageService) { }
 
@@ -25,7 +26,7 @@ export class RegistroClienteComponent {
       response => {
         console.log('Success:', response);
         this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Cliente registrado correctamente' });
-        this.cliente = { nombre: '', ci_nit: '', email: '' };
+        this.cliente = { nombre: '', ci_nit: '', email: '', domicilio: '' };
       },
       error => {
         console.error('Error:', error);

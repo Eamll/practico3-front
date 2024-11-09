@@ -3,4 +3,5 @@ export interface Cliente {
   nombre: string;
   ci_nit: string;
   email: string;
+  domicilio: string;
 }
